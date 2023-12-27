@@ -19,7 +19,7 @@ data:
           path: /var/lib/grafana/dashboards
           foldersFromFilesStructure: true
   dashboard.json: |
-    {
+      {
       "__inputs": [
         {
           "name": "DS_K6",
@@ -83,7 +83,7 @@ data:
               "bars": true,
               "dashLength": 10,
               "dashes": false,
-              "datasource": "$DS_K6",
+              "datasource": "${DS_K6}",
               "fill": 1,
               "id": 1,
               "interval": ">1s",
@@ -1635,4 +1635,4 @@ data:
       "timezone": "browser",
       "title": "k6 Load Testing Results",
       "version": 22
-    }
+      }
