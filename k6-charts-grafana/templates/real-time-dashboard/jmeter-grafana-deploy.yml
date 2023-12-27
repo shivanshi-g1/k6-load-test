@@ -1,0 +1,49 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: jmeter-grafana
+  labels:
+    monitoring: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      monitoring: grafana
+  template:
+    metadata:
+      labels:
+        monitoring: grafana
+    spec:
+      containers:
+      - name: grafana
+        image: grafana/grafana:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: datasource-yml
+          mountPath: /etc/grafana/provisioning/datasources
+        - name: dashboard-yml
+          mountPath: /etc/grafana/provisioning/dashboards
+        - name: dashboard-json
+          mountPath: /var/lib/grafana/dashboards
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+      volumes:
+      - name: datasource-yml
+        configMap:
+          name: grafana-datasource-config
+          items:
+          - key: "datasource.yml"
+            path: "datasource.yml"
+      - name: dashboard-yml
+        configMap:
+          name: grafana-dashboard-config
+          items:
+          - key: "dashboard.yml"
+            path: "dashboard.yml"
+      - name: dashboard-json
+        configMap:
+          name: grafana-dashboard-config
+          items:
+          - key: "dashboard.json"
+            path: "dashboard.json"
