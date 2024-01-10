@@ -1,1 +1,1 @@
-"# k6-run-grafana" 
+"# k6-load-test" 
