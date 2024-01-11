@@ -9,3 +9,11 @@ spec:
     configMap:
       name: {{ .Values.TestRun.name }}
       file: {{ .Values.TestRun.test_script }}
+  runner:
+    metadata:
+      labels:
+        mylabel: k6-test
+  starter:
+    metadata:
+      labels:
+        mylabel: k6-test
