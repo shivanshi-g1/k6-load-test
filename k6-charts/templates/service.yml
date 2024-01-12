@@ -4,7 +4,7 @@ metadata:
   name: k6-api-service
 spec:
   selector:
-    mylabel: k6-test
+    app: k6
   ports:
     - protocol: TCP
       port: 6565 

@@ -4,16 +4,21 @@ metadata:
   name: {{ .Values.k6.name }}
 spec:
   parallelism: {{ .Values.k6.parallelism }}
-  arguments: --tag testid={{ .Values.k6.name }}
+  arguments: -o experimental-prometheus-rw --tag testid={{ .Values.k6.name }} --web.enable-remote-write-receiver
   script:
     configMap:
       name: {{ .Values.TestRun.name }}
       file: {{ .Values.TestRun.test_script }}
-  runner:
-    metadata:
-      labels:
-        mylabel: k6-test
-  starter:
-    metadata:
-      labels:
-        mylabel: k6-test
+  runner:            
+    env:
+      - name: K6_PROMETHEUS_RW_SERVER_URL
+        value: http://a3312d569428243d2bb9375b5cc69dad-433507746.eu-central-1.elb.amazonaws.com/api/v1/write
+  # runner:
+  #   image:
+  #   metadata:
+  #     labels:
+  #       mylabel: k6-test
+  # starter:
+  #   metadata:
+  #     labels:
+  #       mylabel: k6-test
